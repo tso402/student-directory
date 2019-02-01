@@ -21,7 +21,7 @@ end
 def print(students) # Prints info on each student
 students.each_with_index do |student, index|
     if (student[:name].start_with? ("J")) && (student[:name].length < 12)
-    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} chort)" 
+    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort) and lives in #{:home}" 
     end
   end
 end
@@ -37,10 +37,17 @@ def input_students
     name = gets.chomp
     # while the name is not empty, repeat this code
     while !name.empty? do
+        # Ask which cohort they are in
+        puts "Which cohort are you in?"
+        cohort = gets.chomp
+        # Ask where they live
+        puts "Where do you live?"
+        home = gets.chomp
         # add the student hash to the array
-        students << {name: name, cohort: :november}
+        students << {name: name, cohort: cohort, home: home}
         puts "Now we have #{students.count} students"
         # get the next name from the user
+        puts "Another name?"
         name = gets.chomp
     end
     # return the array of students
