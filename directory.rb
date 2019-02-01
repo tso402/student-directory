@@ -20,7 +20,9 @@ end
 
 def print(students) # Prints info on each student
 students.each_with_index do |student, index|
+    if student[:name].start_with? ("J")
     puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} chort)" 
+    end
   end
 end
 def print_footer(students) # prints a statment on the number of students
