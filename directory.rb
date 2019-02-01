@@ -42,7 +42,11 @@ end
 
 
 def print_footer(students) # prints a statment on the number of students
-puts "Overall, we have #{students.count} great students"
+  if students.count == 1
+    puts puts "Overall, we have 1 great student"
+  else
+    puts "Overall, we have #{students.count} great students"
+  end
 end
 # New input that captures name and cohort in one go
 def input_students
@@ -68,7 +72,11 @@ def input_students
         home = gets.chomp
         # add the student hash to the array
         students << {name: name, cohort: cohort, home: home}
+        if students.count == 1
+            puts "Now we have 1 student"
+        else
         puts "Now we have #{students.count} students"
+        end
         # get the next name from the user
         puts "Another name?"
         input = gets.chomp
