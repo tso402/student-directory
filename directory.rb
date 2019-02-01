@@ -17,7 +17,7 @@ def print_header # print intial text
 puts "The students of Villians Academy"
 puts "-------------"
 end
-begin
+=begin
 def print(students) # Prints info on each student
 students.each_with_index do |student, index|
     if (student[:name].start_with? ("J")) && (student[:name].length < 12)
@@ -26,17 +26,19 @@ students.each_with_index do |student, index|
   end
 end
 end
-=begin Rewrite the each() method that prints all students using while or until control flow methods (Loops). (CURRENTLY STUCK)
+=end
+# Rewrite the each() method that prints all students using while or until control flow methods (Loops). (CURRENTLY STUCK)
 def print(students) # Prints info on each student
  n = 0
- p = 0
  while n < students.count
+ student = students[n]
     if (student[:name].start_with? ("J")) && (student[:name].length < 12)
-    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort) and lives in #{:home}".center(30) 
+    puts "#{n + 1}. #{student[:name]} (#{student[:cohort]} cohort) and lives in #{:home}".center(30) 
+    n += 1
     end
-  end
+ end
 end
-=end
+
 
 def print_footer(students) # prints a statment on the number of students
 puts "Overall, we have #{students.count} great students"
