@@ -19,8 +19,8 @@ puts "-------------"
 end
 
 def print(students) # Prints info on each student
-students.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} chort)" 
+students.each_with_index do |student, index|
+    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} chort)" 
   end
 end
 def print_footer(students) # prints a statment on the number of students
