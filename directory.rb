@@ -17,7 +17,7 @@ def print_header # print intial text
 puts "The students of Villians Academy"
 puts "-------------"
 end
-
+begin
 def print(students) # Prints info on each student
 students.each_with_index do |student, index|
     if (student[:name].start_with? ("J")) && (student[:name].length < 12)
@@ -25,21 +25,41 @@ students.each_with_index do |student, index|
     end
   end
 end
+end
+=begin Rewrite the each() method that prints all students using while or until control flow methods (Loops). (CURRENTLY STUCK)
+def print(students) # Prints info on each student
+ n = 0
+ p = 0
+ while n < students.count
+    if (student[:name].start_with? ("J")) && (student[:name].length < 12)
+    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort) and lives in #{:home}".center(30) 
+    end
+  end
+end
+=end
+
 def print_footer(students) # prints a statment on the number of students
 puts "Overall, we have #{students.count} great students"
 end
+# New input that captures name and cohort in one go
 def input_students
-    puts "Please enter the names of the students"
+    puts "Please enter the names and cohort of the students"
     puts "To finish, just hit return twice"
     # create and empty array
     students = []
     # get the first name
-    name = gets.chomp
+    input = gets.chomp
     # while the name is not empty, repeat this code
-    while !name.empty? do
-        # Ask which cohort they are in
-        puts "Which cohort are you in?"
-        cohort = gets.chomp
+    while !input.empty? do
+        split = input.split(" ")
+        name = split[0]
+        if split.length < 2
+            cohort = :november
+        elsif split.length == 2
+        cohort = split[1].to_sym
+        else puts "Only two words please!!! Start again....."
+        return input_students
+        end
         # Ask where they live
         puts "Where do you live?"
         home = gets.chomp
@@ -48,7 +68,7 @@ def input_students
         puts "Now we have #{students.count} students"
         # get the next name from the user
         puts "Another name?"
-        name = gets.chomp
+        input = gets.chomp
     end
     # return the array of students
     students
