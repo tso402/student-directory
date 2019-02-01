@@ -21,7 +21,7 @@ end
 def print(students) # Prints info on each student
 students.each_with_index do |student, index|
     if (student[:name].start_with? ("J")) && (student[:name].length < 12)
-    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort) and lives in #{:home}" 
+    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort) and lives in #{:home}".center(30) 
     end
   end
 end
