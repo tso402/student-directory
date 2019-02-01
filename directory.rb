@@ -17,26 +17,27 @@ def print_header # print intial text
 puts "The students of Villians Academy"
 puts "-------------"
 end
-=begin
-def print(students) # Prints info on each student
-students.each_with_index do |student, index|
-    if (student[:name].start_with? ("J")) && (student[:name].length < 12)
-    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort) and lives in #{:home}".center(30) 
-    end
-  end
-end
-end
-=end
-# Rewrite the each() method that prints all students using while or until control flow methods (Loops). (CURRENTLY STUCK)
 def print(students) # Prints info on each student
  n = 0
+ info = []
+ cohorts = []
  while n < students.count
  student = students[n]
     if (student[:name].start_with? ("J")) && (student[:name].length < 12)
-    puts "#{n + 1}. #{student[:name]} (#{student[:cohort]} cohort) and lives in #{:home}".center(30) 
+        cohorts.push(student[:cohort].to_s).uniq!
+    info.push("#{n + 1}. #{student[:name]} (#{student[:cohort]} cohort) and lives in #{student[:home]}".center(30)) 
     n += 1
     end
  end
+ cohorts.sort!
+ cohorts.each do |cohort|
+     puts cohort.upcase
+     info.each do |person|
+         if person.to_s.include? cohort.to_s
+             puts person
+         end
+         end
+     end
 end
 
 
