@@ -84,6 +84,7 @@ def process(choice)
       remove_students
     when "6"
       puts "Which list to delete?"
+      puts Dir["*.csv"]
       delete_save(STDIN.gets[0...-1]) # Select a list to delete
     when "9"
       exit # Exit the program
@@ -93,7 +94,6 @@ def process(choice)
 end    
 
 def interactive_menu # Creating an interactive menu method to make my program easier to use
-  try_load_students
   loop do
     print_menu  # 1. print the menu and ask the user what option to choose
     process(STDIN.gets[0...-1])  # 2. read the input and carry out the option
@@ -132,9 +132,9 @@ def save_students(filename = "students.csv")
     end
   end
   if @students.count == 1
-    puts "#{@students.count} record was saved"
+    puts "#{@students.count} record was saved to #{filename}"
   else
-    puts "#{@students.count} records were saved"
+    puts "#{@students.count} records were saved to #{filename}"
   end
 end
 
@@ -154,9 +154,9 @@ def load_students(filename = "students.csv")
     n += 1
   end
   if n == 1
-    STDOUT.puts "#{n} record was loaded"
+    STDOUT.puts "#{n} record was loaded from #{filename}"
   else
-    STDOUT.puts "#{n} records were loaded"
+    STDOUT.puts "#{n} records were loaded from #{filename}"
   end
   end
 end
@@ -185,7 +185,8 @@ def remove_students
   if @students.length == 0
     puts "No one to remove"
     return
-  end    
+  end
+  print
   puts "Enter a student to remove"
   removal = gets[0...-1]
   if removal == ""
@@ -213,4 +214,5 @@ def delete_save(filename)
   end
 end
 
-interactive_menu #nothing happens if we dont call the methods
+try_load_students #nothing happens if we dont call the methods
+interactive_menu
