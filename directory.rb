@@ -48,6 +48,7 @@ def print_footer(students) # prints a statment on the number of students
     puts "Overall, we have #{students.count} great students"
   end
 end
+
 # New input that captures name and cohort in one go
 def input_students
     puts "Please enter the names and cohort of the students"
@@ -55,7 +56,8 @@ def input_students
     # create and empty array
     students = []
     # get the first name
-    input = gets.chomp
+    input = gets
+    input = input[0...-1]
     # while the name is not empty, repeat this code
     while !input.empty? do
         split = input.split(" ")
@@ -69,7 +71,8 @@ def input_students
         end
         # Ask where they live
         puts "Where do you live?"
-        home = gets.chomp
+        home = gets
+        home = home[0...-1]
         # add the student hash to the array
         students << {name: name, cohort: cohort, home: home}
         if students.count == 1
@@ -79,7 +82,8 @@ def input_students
         end
         # get the next name from the user
         puts "Another name?"
-        input = gets.chomp
+        input = gets
+        input = input[0...-1]
     end
     # return the array of students
     students
