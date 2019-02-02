@@ -18,6 +18,10 @@ puts "The students of Villians Academy"
 puts "-------------"
 end
 def print(students) # Prints info on each student
+  if students.count == 0
+      puts "No one has signed up :( "
+      return 0
+  end
  n = 0
  info = []
  cohorts = []
