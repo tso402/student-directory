@@ -1,35 +1,36 @@
 @students = [] # An empty array that all methods can access
+
 def print_header # print intial text
-puts "The students of Villians Academy"
-puts "-------------"
-end
-def print # Prints info on each student
-  if @students.count == 0
-      puts "No one has signed up :( "
-      return 0
-  end
- n = 0
- info = []
- cohorts = []
- while n < @students.count
- student = @students[n]
-    if (student[:name].start_with? ("J")) && (student[:name].length < 12)
-        cohorts.push(student[:cohort].to_s).uniq!
-    info.push("#{n + 1}. #{student[:name]} (#{student[:cohort]} cohort) and lives in #{student[:home]}".center(30)) 
-    n += 1
-    end
- end
- cohorts.sort!
- cohorts.each do |cohort|
-     puts cohort.upcase
-     info.each do |person|
-         if person.to_s.include? cohort.to_s
-             puts person
-         end
-         end
-     end
+  puts "The students of Villians Academy"
+  puts "-------------"
 end
 
+def print # Prints info on each student
+  if @students.count == 0
+    puts "No one has signed up :( "
+    return 0
+  end
+   n = 0
+   info = []
+   cohorts = []
+   while n < @students.count
+     student = @students[n]
+       if (student[:name].start_with? ("J")) && (student[:name].length < 12)
+         cohorts.push(student[:cohort].to_s).uniq!
+         info.push("#{n + 1}. #{student[:name]} (#{student[:cohort]} cohort) and lives in #{student[:home]}".center(30)) 
+         n += 1
+       end
+   end
+   cohorts.sort!
+   cohorts.each do |cohort|
+   puts cohort.upcase
+   info.each do |person|
+     if person.to_s.include? cohort.to_s
+       puts person
+     end
+    end
+  end
+end
 
 def print_footer # prints a statment on the number of students
   if @students.count == 1
@@ -39,62 +40,57 @@ def print_footer # prints a statment on the number of students
   end
 end
 
-# New input that captures name and cohort in one go
-def input_students
-    puts "Please enter the names and cohort of the students"
-    puts "To finish, just hit return twice"
-    # create and empty array
-    #students = []
-    # get the first name
-    input = gets
-    input = input[0...-1]
-    # while the name is not empty, repeat this code
+def input_students # New input that captures name and cohort in one go
+  puts "Please enter the names and cohort of the students"
+  puts "To finish, just hit return twice"
+  # get the first name
+  input = gets
+  input = input[0...-1]
+  # while the name is not empty, repeat this code
     while !input.empty? do
-        split = input.split(" ")
-        name = split[0]
+      split = input.split(" ")
+      name = split[0]
         if split.length < 2
-            cohort = :november
+          cohort = :november
         elsif split.length == 2
-        cohort = split[1].to_sym
+          cohort = split[1].to_sym
         else puts "Only two words please!!! Start again....."
         return input_students
         end
-        # Ask where they live
-        puts "Where do you live?"
-        home = gets
-        home = home[0...-1]
-        # add the student hash to the array
-        @students << {name: name, cohort: cohort, home: home}
+      # Ask where they live
+      puts "Where do you live?"
+      home = gets
+      home = home[0...-1]
+      # add the student hash to the array
+      @students << {name: name, cohort: cohort, home: home}
         if @students.count == 1
-            puts "Now we have 1 student"
+          puts "Now we have 1 student"
         else
-        puts "Now we have #{@students.count} students"
+          puts "Now we have #{@students.count} students"
         end
-        # get the next name from the user
-        puts "Another name?"
-        input = gets
-        input = input[0...-1]
+      # get the next name from the user
+      puts "Another name?"
+      input = gets
+      input = input[0...-1]
     end
-    # return the array of students
-    @students
+  # return the array of students
+  @students
 end
 
 def process(choice)
     case choice
-            when "1"
-              # input new students
-              input_students
-            when "2"
-              # print current students
-              show_students
-            when "9"
-              exit # Exit the program
-            else
-              puts "That isn't an available option!"
+      when "1"
+        input_students  # input new students
+      when "2"
+        show_students # print current students
+      when "9"
+        exit # Exit the program
+      else
+        puts "That isn't an available option!"
     end
 end    
-# Creating an interactive menu method to make my program easier to use
-def interactive_menu
+
+def interactive_menu # Creating an interactive menu method to make my program easier to use
  loop do
    # 1. print the menu and ask the user what option to choose
    print_menu
