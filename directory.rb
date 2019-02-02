@@ -1,3 +1,4 @@
+require "csv"
 @students = [] # An empty array that all methods can access
 
 def print_header # print intial text
@@ -137,14 +138,14 @@ def save_students(filename = "students.csv")
         return
     end
     # open a file for writing
-    File.open(filename,"w") { |file|
+    CSV.open(filename, "wb") do |csv|
     # interate over my students array
     @students.each do |student|
         student_record = [student[:name], student[:cohort], student[:home]]
-        csv_line = student_record.join(",")
-        file.puts csv_line
+        csv << student_record
+      end
     end
-    }
+    
     if @students.count == 1
         puts "#{@students.count} record was saved"
     else
@@ -157,24 +158,23 @@ def load_students(filename = "students.csv")
     if filename == ""
         filename = "students.csv"
     end
-    @students = []
     if !File.exists? (filename)
         puts "Sorry, #{filename} doesn't exist!!"
         return
-    else    
-    File.open(filename, "r") { |file|
+    else
+    @students = []
     n = 0
-    file.readlines.each do |record|
-        name, cohort, home = record.chomp.split(",")
-        add_students(name,cohort,home)
-        n += 1
+    CSV.foreach(filename) do |row|
+      name, cohort, home = row[0], row[1], row[2]
+      add_students(name,cohort,home)
+      n += 1
     end
     if n == 1
       STDOUT.puts "#{n} record was loaded"
     else
       STDOUT.puts "#{n} records were loaded"
     end
-    }
+    #}
     end
     
 end
