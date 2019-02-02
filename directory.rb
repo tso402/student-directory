@@ -83,6 +83,8 @@ def process(choice)
         input_students  # input new students
       when "2"
         show_students # print current students
+      when "3"
+        save_students # Save the list of current students
       when "9"
         exit # Exit the program
       else
@@ -103,6 +105,7 @@ def print_menu
     puts "Hello, please choose an option"
     puts "1. Enter new students"
     puts "2. Print a list of current students"
+    puts "3. Save you student list"
     puts "9. Exit the program"
 end
 
@@ -110,6 +113,22 @@ def show_students
      print_header
      print
      print_footer
+end
+
+def save_students
+    if @students.length == 0
+        puts "No students to save!!"
+        return 0
+    end
+    # open a file for writing
+    file = File.open("students.csv","w")
+    # interate over my students array
+    @students.each do |student|
+        student_record = [student[:name], student[:cohort], student[:home]]
+        csv_line = student_record.join(",")
+        file.puts csv_line
+    end
+    file.close
 end
     
 #nothing happens if we dont call the methods
