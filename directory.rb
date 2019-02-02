@@ -141,6 +141,10 @@ def save_students
 end
 
 def load_students(filename = "students.csv")
+    if !File.exists? (filename)
+        puts "Sorry, #{filename} doesn't exist!!"
+        return
+    else    
     file = File.open(filename, "r")
     n = 0
     file.readlines.each do |record|
@@ -154,14 +158,19 @@ def load_students(filename = "students.csv")
       STDOUT.puts "#{n} records were loaded"
     end
     file.close
+    end
 end
 
 def try_load_students
   filename = ARGV.first # First argunment supplied from the command line
-  return if filename.nil? # leave the method if no argument was supplied
+  if filename.nil?
+      filename = "students.csv"
+  end
     if File.exists? (filename) # If the file exists
       load_students(filename)
       puts "Loaded students from #{filename}"
+    elsif !File.exists? (filename) && filename = "students.csv"
+    return
     else # If the file doesn't exist
       puts "Sorry, #{filename} doesn't exist"
       exit
