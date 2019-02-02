@@ -85,6 +85,8 @@ def process(choice)
         show_students # print current students
       when "3"
         save_students # Save the list of current students
+      when "4"
+        load_students # Load a list of students from CSV
       when "9"
         exit # Exit the program
       else
@@ -105,7 +107,8 @@ def print_menu
     puts "Hello, please choose an option"
     puts "1. Enter new students"
     puts "2. Print a list of current students"
-    puts "3. Save you student list"
+    puts "3. Save your student list"
+    puts "4. Load a student list"
     puts "9. Exit the program"
 end
 
@@ -129,6 +132,34 @@ def save_students
         file.puts csv_line
     end
     file.close
+    if @students.count == 1
+        puts "#{@students.count} record was saved"
+    else
+      puts "#{@students.count} records were saved"
+    end
+end
+
+def load_students
+    file = File.open("students.csv", "r")
+   # if file.readlines.count == 0
+   #     puts "No record to load"
+  #      file.close
+  #      return 0
+  #  else
+    n = 0
+    file.readlines.each do |record|
+        name, cohort, home = record.chomp.split(",")
+        @students << {name: name, cohort: cohort.to_sym, home: home}
+        n += 1
+    end
+    if n == 1
+      STDOUT.puts "#{n} record was loaded"
+    else
+      STDOUT.puts "#{n} records were loaded"
+    end
+
+    file.close
+   # end
 end
     
 #nothing happens if we dont call the methods
