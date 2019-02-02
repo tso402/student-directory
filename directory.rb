@@ -87,8 +87,13 @@ def process(choice)
         puts "Which file to save to?"
         save_students(STDIN.gets.chomp) # Save the list of current students
       when "4"
-        puts "While file to load?"
+        puts "Which file to load?"
         load_students(STDIN.gets.chomp) # Load a list of students from CSV
+      when "5"
+        remove_students
+      when "6"
+        puts "Which list to delete?"
+        delete_save(STDIN.gets.chomp) # Select a list to delete
       when "9"
         exit # Exit the program
       else
@@ -112,6 +117,8 @@ def print_menu
     puts "2. Print a list of current students"
     puts "3. Save your student list"
     puts "4. Load a student list"
+    puts "5. Remove a student"
+    puts "6. Delete a student list"
     puts "9. Exit the program"
 end
 
@@ -191,7 +198,40 @@ end
 def add_students(name,cohort,home)
     @students << {name: name, cohort: cohort.to_sym, home: home}
 end
+
+def remove_students
+    if @students.length == 0
+        puts "No one to remove"
+        return
+    end    
+    puts "Enter a student to remove"
+    removal = gets.chomp
+    if removal == ""
+      puts "You didn't enter a name"
+        return
+    end
+    if @students.any? {|student| student[:name] == removal}
+      @students.delete_if {|student| student[:name] == removal}
+      puts "#{removal} was removed"
+    else puts "#{removal} isn't a current student"
+        return
+    end
+end
+
+def delete_save(filename)
+    if filename == ""
+        puts "No save file given"
+        return
+    end
+    if !File.exists? (filename)
+        puts "#{filename} doesn't exist"
+        return
+    else File.delete(filename)
+        puts "#{filename} was deleted"
+    end
+   
+end
     
-    
+
 #nothing happens if we dont call the methods
 interactive_menu
