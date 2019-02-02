@@ -44,7 +44,7 @@ def input_students # New input that captures name and cohort in one go
   puts "Please enter the names and cohort of the students"
   puts "To finish, just hit return twice"
   # get the first name
-  input = gets
+  input = STDIN.gets
   input = input[0...-1]
   # while the name is not empty, repeat this code
     while !input.empty? do
@@ -59,7 +59,7 @@ def input_students # New input that captures name and cohort in one go
         end
       # Ask where they live
       puts "Where do you live?"
-      home = gets
+      home = STDIN.gets
       home = home[0...-1]
       # add the student hash to the array
       @students << {name: name, cohort: cohort, home: home}
@@ -70,7 +70,7 @@ def input_students # New input that captures name and cohort in one go
         end
       # get the next name from the user
       puts "Another name?"
-      input = gets
+      input = STDIN.gets
       input = input[0...-1]
     end
   # return the array of students
@@ -95,11 +95,12 @@ def process(choice)
 end    
 
 def interactive_menu # Creating an interactive menu method to make my program easier to use
+ try_load_students
  loop do
    # 1. print the menu and ask the user what option to choose
    print_menu
    # 2. read the input and carry out the option
-   process(gets.chomp)
+   process(STDIN.gets.chomp)
   end
 end
 
@@ -139,13 +140,8 @@ def save_students
     end
 end
 
-def load_students
-    file = File.open("students.csv", "r")
-   # if file.readlines.count == 0
-   #     puts "No record to load"
-  #      file.close
-  #      return 0
-  #  else
+def load_students(filename = "students.csv")
+    file = File.open(filename, "r")
     n = 0
     file.readlines.each do |record|
         name, cohort, home = record.chomp.split(",")
@@ -157,9 +153,19 @@ def load_students
     else
       STDOUT.puts "#{n} records were loaded"
     end
-
     file.close
-   # end
+end
+
+def try_load_students
+  filename = ARGV.first # First argunment supplied from the command line
+  return if filename.nil? # leave the method if no argument was supplied
+    if File.exists? (filename) # If the file exists
+      load_students(filename)
+      puts "Loaded students from #{filename}"
+    else # If the file doesn't exist
+      puts "Sorry, #{filename} doesn't exist"
+      exit
+    end
 end
     
 #nothing happens if we dont call the methods
