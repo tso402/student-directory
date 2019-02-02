@@ -1,32 +1,18 @@
-#let's put all students into an array
-students = [
-    {name: "Dr. Hannibal Lecter", cohort: :november},
-    {name: "Darth Vader",cohort: :november},
-    {name: "Nurse Ratched",cohort: :november},
-    {name: "Michael Corleone",cohort: :november},
-    {name: "Alex DeLarge",cohort: :november},
-    {name: "The Wicked Witch of the West",cohort: :november},
-    {name: "Terminator",cohort: :november},
-    {name: "Freddy Krueger",cohort: :november},
-    {name: "The Joker",cohort: :november},
-    {name: "Joffrey Baratheon",cohort: :november},
-    {name: "Norman Bates",cohort: :november}
-]
-
+@students = [] # An empty array that all methods can access
 def print_header # print intial text
 puts "The students of Villians Academy"
 puts "-------------"
 end
-def print(students) # Prints info on each student
-  if students.count == 0
+def print # Prints info on each student
+  if @students.count == 0
       puts "No one has signed up :( "
       return 0
   end
  n = 0
  info = []
  cohorts = []
- while n < students.count
- student = students[n]
+ while n < @students.count
+ student = @students[n]
     if (student[:name].start_with? ("J")) && (student[:name].length < 12)
         cohorts.push(student[:cohort].to_s).uniq!
     info.push("#{n + 1}. #{student[:name]} (#{student[:cohort]} cohort) and lives in #{student[:home]}".center(30)) 
@@ -45,11 +31,11 @@ def print(students) # Prints info on each student
 end
 
 
-def print_footer(students) # prints a statment on the number of students
-  if students.count == 1
+def print_footer # prints a statment on the number of students
+  if @students.count == 1
     puts puts "Overall, we have 1 great student"
   else
-    puts "Overall, we have #{students.count} great students"
+    puts "Overall, we have #{@students.count} great students"
   end
 end
 
@@ -58,7 +44,7 @@ def input_students
     puts "Please enter the names and cohort of the students"
     puts "To finish, just hit return twice"
     # create and empty array
-    students = []
+    #students = []
     # get the first name
     input = gets
     input = input[0...-1]
@@ -78,11 +64,11 @@ def input_students
         home = gets
         home = home[0...-1]
         # add the student hash to the array
-        students << {name: name, cohort: cohort, home: home}
-        if students.count == 1
+        @students << {name: name, cohort: cohort, home: home}
+        if @students.count == 1
             puts "Now we have 1 student"
         else
-        puts "Now we have #{students.count} students"
+        puts "Now we have #{@students.count} students"
         end
         # get the next name from the user
         puts "Another name?"
@@ -90,41 +76,45 @@ def input_students
         input = input[0...-1]
     end
     # return the array of students
-    students
+    @students
 end
 
-# Creating an interactive menu method to make my program easier to use
-def interactive_menu
-    students = []
-    loop do
-        # 1. print the menu and sak the user what option to choose
-        puts "Hello, please choose an option"
-        puts "1. Enter new students"
-        puts "2. Print a list of current students"
-        puts "9. Exit the program"
-        # 2. read the input and save to a variable
-        choice = gets.chomp
-        # 3. Do what the user asked for
-          case choice
+def process(choice)
+    case choice
             when "1"
               # input new students
-              students = input_students
+              input_students
             when "2"
               # print current students
-              print_header
-              print(students)
-              print_footer(students)
+              show_students
             when "9"
-              # Exit the program
-              exit
+              exit # Exit the program
             else
               puts "That isn't an available option!"
-          end
-        end
+    end
+end    
+# Creating an interactive menu method to make my program easier to use
+def interactive_menu
+ loop do
+   # 1. print the menu and ask the user what option to choose
+   print_menu
+   # 2. read the input and carry out the option
+   process(gets.chomp)
+  end
 end
+
+def print_menu
+    puts "Hello, please choose an option"
+    puts "1. Enter new students"
+    puts "2. Print a list of current students"
+    puts "9. Exit the program"
+end
+
+def show_students
+     print_header
+     print
+     print_footer
+end
+    
 #nothing happens if we dont call the methods
 interactive_menu
-#students = input_students
-#print_header
-#print(students)
-#print_footer(students)
