@@ -137,14 +137,14 @@ def save_students(filename = "students.csv")
         return
     end
     # open a file for writing
-    file = File.open(filename,"w")
+    File.open(filename,"w") { |file|
     # interate over my students array
     @students.each do |student|
         student_record = [student[:name], student[:cohort], student[:home]]
         csv_line = student_record.join(",")
         file.puts csv_line
     end
-    file.close
+    }
     if @students.count == 1
         puts "#{@students.count} record was saved"
     else
@@ -162,7 +162,7 @@ def load_students(filename = "students.csv")
         puts "Sorry, #{filename} doesn't exist!!"
         return
     else    
-    file = File.open(filename, "r")
+    File.open(filename, "r") { |file|
     n = 0
     file.readlines.each do |record|
         name, cohort, home = record.chomp.split(",")
@@ -174,7 +174,7 @@ def load_students(filename = "students.csv")
     else
       STDOUT.puts "#{n} records were loaded"
     end
-    file.close
+    }
     end
     
 end
