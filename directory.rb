@@ -62,12 +62,12 @@ def input_students # New input that captures name and cohort in one go
       home = STDIN.gets
       home = home[0...-1]
       # add the student hash to the array
-      @students << {name: name, cohort: cohort, home: home}
-        if @students.count == 1
-          puts "Now we have 1 student"
-        else
-          puts "Now we have #{@students.count} students"
-        end
+      add_students(name,cohort,home)
+      if @students.count == 1
+        puts "Now we have 1 student"
+      else
+        puts "Now we have #{@students.count} students"
+      end
       # get the next name from the user
       puts "Another name?"
       input = STDIN.gets
@@ -145,7 +145,7 @@ def load_students(filename = "students.csv")
     n = 0
     file.readlines.each do |record|
         name, cohort, home = record.chomp.split(",")
-        @students << {name: name, cohort: cohort.to_sym, home: home}
+        add_students(name,cohort,home)
         n += 1
     end
     if n == 1
@@ -167,6 +167,11 @@ def try_load_students
       exit
     end
 end
+
+def add_students(name,cohort,home)
+    @students << {name: name, cohort: cohort.to_sym, home: home}
+end
+    
     
 #nothing happens if we dont call the methods
 interactive_menu
