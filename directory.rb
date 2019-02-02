@@ -84,9 +84,11 @@ def process(choice)
       when "2"
         show_students # print current students
       when "3"
-        save_students # Save the list of current students
+        puts "Which file to save to?"
+        save_students(STDIN.gets.chomp) # Save the list of current students
       when "4"
-        load_students # Load a list of students from CSV
+        puts "While file to load?"
+        load_students(STDIN.gets.chomp) # Load a list of students from CSV
       when "9"
         exit # Exit the program
       else
@@ -119,13 +121,16 @@ def show_students
      print_footer
 end
 
-def save_students
+def save_students(filename = "students.csv")
+    if filename == ""
+        filename = "students.csv"
+    end
     if @students.length == 0
         puts "No students to save!!"
-        return 0
+        return
     end
     # open a file for writing
-    file = File.open("students.csv","w")
+    file = File.open(filename,"w")
     # interate over my students array
     @students.each do |student|
         student_record = [student[:name], student[:cohort], student[:home]]
@@ -138,9 +143,14 @@ def save_students
     else
       puts "#{@students.count} records were saved"
     end
+    
 end
 
 def load_students(filename = "students.csv")
+    if filename == ""
+        filename = "students.csv"
+    end
+    @students = []
     if !File.exists? (filename)
         puts "Sorry, #{filename} doesn't exist!!"
         return
@@ -159,6 +169,7 @@ def load_students(filename = "students.csv")
     end
     file.close
     end
+    
 end
 
 def try_load_students
