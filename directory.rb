@@ -92,8 +92,39 @@ def input_students
     # return the array of students
     students
 end
+
+# Creating an interactive menu method to make my program easier to use
+def interactive_menu
+    students = []
+    loop do
+        # 1. print the menu and sak the user what option to choose
+        puts "Hello, please choose an option"
+        puts "1. Enter new students"
+        puts "2. Print a list of current students"
+        puts "9. Exit the program"
+        # 2. read the input and save to a variable
+        choice = gets.chomp
+        # 3. Do what the user asked for
+          case choice
+            when "1"
+              # input new students
+              students = input_students
+            when "2"
+              # print current students
+              print_header
+              print(students)
+              print_footer(students)
+            when "9"
+              # Exit the program
+              exit
+            else
+              puts "That isn't an available option!"
+          end
+        end
+end
 #nothing happens if we dont call the methods
-students = input_students
-print_header
-print(students)
-print_footer(students)
+interactive_menu
+#students = input_students
+#print_header
+#print(students)
+#print_footer(students)
